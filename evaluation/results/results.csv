@@ -1,0 +1,6 @@
+docs_success,error,github_issues_created,github_repo_url,github_success,issue_feedback_success,prompt,readiness_score,revision_triggered,rounds_processed,runtime_seconds,scaffold_success,spec_success
+True,,5,https://github.com/matsystems07/repopilot-demo,True,True,website showing honda cars,60,True,13,55.51,True,True
+True,,5,https://github.com/matsystems07/repopilot-demo,True,True,car startup,60,True,13,56.53,True,True
+True,,5,https://github.com/matsystems07/repopilot-demo,True,True,student expense tracker,30,True,13,57.8,True,True
+True,,5,https://github.com/matsystems07/repopilot-demo,True,True,travel planner website,30,True,13,55.02,True,True
+True,,5,https://github.com/matsystems07/repopilot-demo,True,True,restaurant menu and ordering platform,72,True,13,34.68,True,True

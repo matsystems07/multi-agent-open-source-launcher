@@ -1,0 +1,13 @@
+{
+    "generated_at": "2026-04-23T19:02:43.705596Z",
+    "total_runs": 5,
+    "spec_success_rate": 100.0,
+    "scaffold_success_rate": 100.0,
+    "docs_success_rate": 100.0,
+    "github_success_rate": 100.0,
+    "issue_feedback_success_rate": 100.0,
+    "revision_trigger_rate": 100.0,
+    "avg_readiness_score": 50.4,
+    "avg_runtime_seconds": 51.91,
+    "total_github_issues_created": 25
+}

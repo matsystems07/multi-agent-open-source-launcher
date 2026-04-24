@@ -1,0 +1,10 @@
+groq
+pydantic
+requests
+python-dotenv
+PyGithub
+slack_sdk
+sendgrid
+streamlit
+rich
+openai
