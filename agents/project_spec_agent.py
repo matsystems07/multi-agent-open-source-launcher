@@ -1,5 +1,6 @@
 from models import make_message
 from tools import call_groq_llm
+import json
 
 
 class ProjectSpecAgent:
@@ -31,7 +32,7 @@ Return concise, practical, implementation-focused output.
 Project idea: {idea}
 Task focus: {focus}
 
-Return a structured JSON-like specification with the following fields:
+Return a structured JSON specification with the following fields:
 - project_title
 - target_users
 - problem_statement
@@ -40,7 +41,7 @@ Return a structured JSON-like specification with the following fields:
 - docs_needs
 - roadmap_inputs
 
-Be concrete and concise.
+Be concrete and concise. Return ONLY valid JSON, no markdown formatting.
 """
 
             spec_text = call_groq_llm(
@@ -49,36 +50,78 @@ Be concrete and concise.
             )
 
             print(f"[{self.name}] Groq response received.")
+            print(f"[{self.name}] Raw response: {spec_text}")
 
-            specification = {
-                "project_title": idea.title(),
-                "target_users": ["developers", "maintainers", "contributors"],
-                "problem_statement": f"A system to help launch and manage the open-source project '{idea}'.",
-                "core_features": [
-                    "Project specification generation",
-                    "Repository scaffolding",
-                    "Documentation drafting",
-                    "GitHub workflow setup"
-                ],
-                "repo_goals": [
-                    "Clear onboarding",
-                    "Reusable starter structure",
-                    "Contributor-friendly workflow"
-                ],
-                "docs_needs": [
-                    "README.md",
-                    "CONTRIBUTING.md",
-                    "ROADMAP.md",
-                    "ONBOARDING.md"
-                ],
-                "roadmap_inputs": [
-                    "Scaffold repository",
-                    "Generate docs",
-                    "Create GitHub issues",
-                    "Review and revise outputs"
-                ],
-                "llm_raw_output": spec_text
-            }
+            # Try to parse the JSON response from Groq
+            try:
+                parsed_spec = json.loads(spec_text)
+                print(f"[{self.name}] Successfully parsed JSON from Groq")
+
+                # Use parsed values, with fallbacks for missing fields
+                specification = {
+                    "project_title": parsed_spec.get("project_title", idea.title()),
+                    "target_users": parsed_spec.get("target_users", ["developers", "maintainers", "contributors"]),
+                    "problem_statement": parsed_spec.get("problem_statement", f"A system to help launch and manage the open-source project '{idea}'."),
+                    "core_features": parsed_spec.get("core_features", [
+                        "Project specification generation",
+                        "Repository scaffolding",
+                        "Documentation drafting",
+                        "GitHub workflow setup"
+                    ]),
+                    "repo_goals": parsed_spec.get("repo_goals", [
+                        "Clear onboarding",
+                        "Reusable starter structure",
+                        "Contributor-friendly workflow"
+                    ]),
+                    "docs_needs": parsed_spec.get("docs_needs", [
+                        "README.md",
+                        "CONTRIBUTING.md",
+                        "ROADMAP.md",
+                        "ONBOARDING.md"
+                    ]),
+                    "roadmap_inputs": parsed_spec.get("roadmap_inputs", [
+                        "Scaffold repository",
+                        "Generate docs",
+                        "Create GitHub issues",
+                        "Review and revise outputs"
+                    ]),
+                    "llm_raw_output": spec_text
+                }
+
+            except json.JSONDecodeError as json_error:
+                print(f"[{self.name}] Failed to parse JSON from Groq: {json_error}")
+                print(f"[{self.name}] Falling back to default specification")
+
+                # Fallback to default specification
+                specification = {
+                    "project_title": idea.title(),
+                    "target_users": ["developers", "maintainers", "contributors"],
+                    "problem_statement": f"A system to help launch and manage the open-source project '{idea}'.",
+                    "core_features": [
+                        "Project specification generation",
+                        "Repository scaffolding",
+                        "Documentation drafting",
+                        "GitHub workflow setup"
+                    ],
+                    "repo_goals": [
+                        "Clear onboarding",
+                        "Reusable starter structure",
+                        "Contributor-friendly workflow"
+                    ],
+                    "docs_needs": [
+                        "README.md",
+                        "CONTRIBUTING.md",
+                        "ROADMAP.md",
+                        "ONBOARDING.md"
+                    ],
+                    "roadmap_inputs": [
+                        "Scaffold repository",
+                        "Generate docs",
+                        "Create GitHub issues",
+                        "Review and revise outputs"
+                    ],
+                    "llm_raw_output": spec_text
+                }
 
         except Exception as e:
             print(f"[{self.name}] LLM failed, falling back to dummy spec: {e}")
