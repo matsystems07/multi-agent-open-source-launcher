@@ -1,0 +1,19 @@
+Based on the provided code, the following Python packages need to be installed:
+
+```
+Flask==2.2.2
+Flask-CORS==3.0.10
+PyGithub==1.55
+requests==2.28.1
+```
+
+Note: The `os`, `sys`, and `datetime` modules are part of the Python Standard Library, so they do not need to be installed separately.
+
+Here is the `requirements.txt` file:
+
+```
+Flask==2.2.2
+Flask-CORS==3.0.10
+PyGithub==1.55
+requests==2.28.1
+```

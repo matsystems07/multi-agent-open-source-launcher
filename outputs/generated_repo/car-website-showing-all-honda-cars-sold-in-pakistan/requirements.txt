@@ -1,0 +1,16 @@
+Based on the provided code, the following Python packages need to be installed:
+
+1. `PyGithub` (for interacting with the GitHub API)
+2. `python-dateutil` is not required as `datetime` is a built-in module.
+
+Here's an example `requirements.txt` file with the necessary dependencies:
+
+```
+PyGithub==1.55
+```
+
+Please note that the version of `PyGithub` may vary depending on your specific requirements and the version of Python you are using. You can install the packages using pip:
+
+```bash
+pip install -r requirements.txt
+```
